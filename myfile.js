@@ -175,4 +175,3 @@ const saveEdit = (event) => {
   submitButton.innerHTML = "Open Task";
 };
 
-
