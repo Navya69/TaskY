@@ -175,10 +175,4 @@ const saveEdit = (event) => {
   submitButton.innerHTML = "Open Task";
 };
 
-// Strigify
-// JS object -> JSON
 
-// Parse
-// JSON -> JS objects
-
-// contenteditable = "true"
