@@ -1,126 +1,170 @@
 <!DOCTYPE html>
-<html>
-
-
+<html lang="en">
   <head>
-  
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/fontawesome.min.css" integrity="sha512-cHxvm20nkjOUySu7jdwiUxgGy11vuVPE9YeK89geLMLMMEOcKFyS2i+8wo0FOwyQO/bL8Bvq1KMsqK4bbOsPnA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-   <script src="app.js"></script>
-    <style>
-      body {
-        background-color: #ebf2ff;
-      }
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
 
-    </style>
+    <!-- fontawesome icons -->
+    <link
+      rel="stylesheet"
+      href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+      integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
+      crossorigin="anonymous"
+    />
+
+    <title>Task Management App</title>
   </head>
-
-  <body onload="loadData()" >
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <body style="background-color: #ebf3ff" onload="loadExistingCards()">
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="newTask"
+      tabindex="-1"
+      aria-labelledby="newTaskLabel"
+      aria-hidden="true"
+    >
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">New Task</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <h5 class="modal-title" id="newTaskLabel">Modal title</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
           </div>
           <div class="modal-body">
-            <form>
-              <div class="mb-3">
-                <label for="image-url" class="col-form-label">Image Url:</label>
-                <input type="url" class="form-control" id="image-url" aria-describedby="Image URL" placeholder="https://example.com/image.png">
-              </div>
-              <div class="mb-3">
-                <label for="title" class="col-form-label" >Task Title:</label>
-                <input type="text" class="form-control" id="title" placeholder="Learn Bootstrap">
-              </div>
-              <div class="mb-3">
-                <label for="type" class="col-form-label">Task Type:</label>
-                <input type="text" class="form-control" id="type" placeholder="work">
-              </div>
-              <div class="mb-3">
-                <label for="message-text" class="col-form-label">Task Description:</label>
-                <textarea rows="6" class="form-control" id="message-text" placeholder="Describe your task here"></textarea>
-              </div>
-            </form>
+            <div class="mb-3">
+              <label for="imageURL" class="form-label">Image URL</label>
+              <input
+                type="url"
+                class="form-control"
+                id="imageURL"
+                placeholder="http://image.com/image.jpg"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="taskTitle" class="form-label">Task Title</label>
+              <input
+                type="text"
+                class="form-control"
+                id="taskTitle"
+                placeholder="web development"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="taskType" class="form-label">Task Type</label>
+              <input
+                type="text"
+                class="form-control"
+                id="taskType"
+                placeholder="practice"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="taskDescription" class="form-label"
+                >Task Description</label
+              >
+              <textarea
+                id="taskDescription"
+                class="form-control"
+                rows="3"
+                placeholder="Describe the task here"
+              ></textarea>
+            </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" onclick="saveChanges()" data-bs-dismiss="modal" >Add</button>
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              onclick="addNewCard()"
+              data-bs-dismiss="modal"
+            >
+              Save changes
+            </button>
           </div>
         </div>
       </div>
     </div>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="container-fluid">
-        <a class="navbar-brand fw-bold text-primary" href="#">TaskY</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link active fw-bold" aria-current="page" href="#">Home</a>
-            </li>
-
-          </ul>
-          <form class="d-flex">
-
-            <button type="button" class="btn btn-primary ml-auto" data-bs-toggle="modal" data-bs-target="#exampleModal"> <i class="fas fa-plus mr-2"></i>Add New</button>
-          </form>
-        </div>
-      </div>
-    </nav>
-
-
-
-
-
-
-    <div class="container text-center">
-      <div class="row mt-3">
-        <div class="col">
-
-        </div>
-        <div class="col-sm-12 col-md-6 col-lg-4">
-          <div class="input-group mb-3">
-            <input type="text" class="form-control shadow" placeholder="Search Here" aria-label="Search Here" aria-describedby="basic-addon2">
-            <span class="input-group-text" id="basic-addon2"><i class="fas fa-search"></i></span>
+    <header>
+      <nav class="navbar navbar-expand-lg navbar-light bg-light shadow">
+        <div class="container-fluid">
+          <a class="fs-3 fw-bolder" href="#">Tasky</a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-3 me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Home</a>
+              </li>
+            </ul>
+            <button
+              class="btn btn-primary"
+              type="button"
+              data-bs-toggle="modal"
+              data-bs-target="#newTask"
+            >
+              <i class="far fa-plus"></i> Add New
+            </button>
           </div>
         </div>
+      </nav>
+    </header>
 
-      </div>
-
-      <div class="row task_container">
-
-        <!-- <div class="col-sm-12 col-md-6 col-lg-4">
-          <div class="card">
-            <div class="card-header d-flex justify-content-end gap-2">
-              <button type="button" class="btn btn-success"> <i class="fas fa-pencil-alt"> </i>
-              </button>
-              <button type="button" class="btn btn-danger"><i class="fas fa-trash-alt"></i>
-              </button>
-            </div>
-        
-            <div class="card-body ">
-              <img src="https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8dGFza3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60" class="card-img-top" alt="...">
-              <h5 class="card-title mt-3 text-primary fw-bolder">Title</h5>
-              <p class="card-text"> Add task description here</p>
-              <a href="#" class="btn btn-primary">Submit</a>
-            </div>
-          </div> -->
+    <main class="container">
+      <section class="row justify-content-center mt-5">
+        <div class="col-md-8 col-lg-6">
+          <div class="input-group mb-3 shadow">
+            <input
+              type="search"
+              class="form-control"
+              placeholder="Search Task"
+              aria-label="Search Task"
+              aria-describedby="basic-addon1"
+            />
+            <span class="input-group-text" id="basic-addon1">
+              <i class="far fa-search"></i>
+            </span>
+          </div>
         </div>
-        <div class="col">
+      </section>
 
-        </div>
-        <div class="col">
+      <!-- Task Container -->
+      <section class="task__container row"></section>
+    </main>
 
-        </div>
+    <!-- JavaScript Bundle with Popper -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
 
-      </div>
-
-    </div>
+    <script src="myfile.js"></script>
   </body>
-
 </html>
